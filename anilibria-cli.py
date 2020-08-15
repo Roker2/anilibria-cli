@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import click
 import requests
 
@@ -11,8 +10,7 @@ def cli():
 .%%..%%..%%..%%....%%....%%........%%....%%..%%..%%..%%....%%....%%..%%.
 .%%..%%..%%..%%..%%%%%%..%%%%%%..%%%%%%..%%%%%...%%..%%..%%%%%%..%%..%%.
 ..................AniLibria-cli от Тортика..............................
-........................................................................
-"""
+........................................................................"""
 
 
 @click.command()
@@ -28,6 +26,20 @@ def findtitle(title, desc):
 
 
 cli.add_command(findtitle)
+
+
+@click.command()
+@click.option('--desc', is_flag=True, help='Вывести описание тайтла')
+def updates(desc):
+    response = requests.get('https://api.anilibria.tv/v2/getUpdates')
+    data = response.json()
+    for item in data:
+        click.echo('* '+item['names']['ru'] + ' | ' + item['names']['en'])
+        if desc:
+            click.echo(item['description'] + '\n')
+
+
+cli.add_command(updates)
 
 if __name__ == '__main__':
     cli()
