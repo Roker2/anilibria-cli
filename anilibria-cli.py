@@ -41,5 +41,19 @@ def updates(desc):
 
 cli.add_command(updates)
 
+
+@click.command()
+@click.option('--desc', is_flag=True, help='Вывести описание тайтла')
+def randomtitle(desc):
+    response = requests.get('https://api.anilibria.tv/v2/getRandomTitle')
+    name = response.json()
+    click.echo(name['names']['ru'] + ' | ' + name['names']['en'])
+    if desc:
+        click.echo(name['description'])
+
+
+cli.add_command(randomtitle)
+
+
 if __name__ == '__main__':
     cli()
