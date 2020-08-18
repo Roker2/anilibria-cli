@@ -3,6 +3,10 @@ import requests
 import os
 
 
+def get_ru_en_name(item):
+    return item['names']['ru'] + ' | ' + item['names']['en']
+
+
 def show_titles_list(url, desc):
     # Generate separator line, if desc is True
     if desc:
@@ -16,7 +20,7 @@ def show_titles_list(url, desc):
     response = requests.get(url)
     data = response.json()
     for item in data:
-        click.echo('* ' + item['names']['ru'] + ' | ' + item['names']['en'])
+        click.echo('* ' + get_ru_en_name(item))
         if desc:
             click.echo(item['description'])
             click.echo(separator_line)
@@ -58,7 +62,7 @@ cli.add_command(updates)
 def randomtitle(desc):
     response = requests.get('https://api.anilibria.tv/v2/getRandomTitle')
     name = response.json()
-    click.echo(name['names']['ru'] + ' | ' + name['names']['en'])
+    click.echo(get_ru_en_name(name))
     if desc:
         click.echo(name['description'])
 
