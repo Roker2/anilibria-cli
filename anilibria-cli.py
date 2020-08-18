@@ -1,5 +1,6 @@
 import click
 import requests
+import os
 
 
 @click.group()
@@ -31,12 +32,22 @@ cli.add_command(findtitle)
 @click.command()
 @click.option('--desc', is_flag=True, help='Вывести описание тайтла')
 def updates(desc):
+    # Generate separator line, if desc is True
+    if desc:
+        # Get rows and columns of terminal
+        # Rows is unneeded value
+        _, columns = os.popen('stty size', 'r').read().split()
+        # Generate separator line
+        separator_line = ''
+        for i in range(int(columns)):
+            separator_line += '━'
     response = requests.get('https://api.anilibria.tv/v2/getUpdates')
     data = response.json()
     for item in data:
         click.echo('* '+item['names']['ru'] + ' | ' + item['names']['en'])
         if desc:
-            click.echo(item['description'] + '\n')
+            click.echo(item['description'])
+            click.echo(separator_line)
 
 
 cli.add_command(updates)
