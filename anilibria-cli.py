@@ -3,6 +3,26 @@ import requests
 import os
 
 
+def show_titles_list(url, desc):
+    # Generate separator line, if desc is True
+    if desc:
+        # Get rows and columns of terminal
+        # Rows is unneeded value
+        _, columns = os.popen('stty size', 'r').read().split()
+        # Generate separator line
+        separator_line = ''
+        for i in range(int(columns)):
+            separator_line += '━'
+    response = requests.get(url)
+    data = response.json()
+    for item in data:
+        click.echo('* ' + item['names']['ru'] + ' | ' + item['names']['en'])
+        if desc:
+            click.echo(item['description'])
+            click.echo(separator_line)
+    return response
+
+
 @click.group()
 def cli():
     """..%%%%...%%..%%..%%%%%%..%%......%%%%%%..%%%%%...%%%%%...%%%%%%...%%%%..
@@ -18,12 +38,7 @@ def cli():
 @click.option('--title', help='Информация об тайтле')
 @click.option('--desc', is_flag=True, help='Вывести описание тайтла')
 def findtitle(title, desc):
-    response = requests.get('https://api.anilibria.tv/v2/searchTitles?search=' + title)
-    name = response.json()
-    for item in name:
-        click.echo(item['names']['ru'] + ' | ' + item['names']['en'])
-        if desc:
-            click.echo(item['description'])
+    show_titles_list('https://api.anilibria.tv/v2/searchTitles?search=' + title, desc)
 
 
 cli.add_command(findtitle)
@@ -32,22 +47,7 @@ cli.add_command(findtitle)
 @click.command()
 @click.option('--desc', is_flag=True, help='Вывести описание тайтла')
 def updates(desc):
-    # Generate separator line, if desc is True
-    if desc:
-        # Get rows and columns of terminal
-        # Rows is unneeded value
-        _, columns = os.popen('stty size', 'r').read().split()
-        # Generate separator line
-        separator_line = ''
-        for i in range(int(columns)):
-            separator_line += '━'
-    response = requests.get('https://api.anilibria.tv/v2/getUpdates')
-    data = response.json()
-    for item in data:
-        click.echo('* ' + item['names']['ru'] + ' | ' + item['names']['en'])
-        if desc:
-            click.echo(item['description'])
-            click.echo(separator_line)
+    show_titles_list('https://api.anilibria.tv/v2/getUpdates', desc)
 
 
 cli.add_command(updates)
