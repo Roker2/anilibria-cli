@@ -9,8 +9,6 @@
 
     python anilibria-cli.py --help                
 
-             
-
 > Usage: anilibria-cli.py [OPTIONS] COMMAND [ARGS]...
 > 
 > Options:   --help  Show this message and exit.
@@ -30,6 +28,13 @@
 > Без игры — нет жизни | No Game No Life История «No Game, No Life»
 > фокусируется на Соре и Широ, брате и сестре, ...
 
+# Доступные команды
+
+- findtitle
+- randomtitle
+- updates
+
 # Дополнительно
+
 Используется API v2: https://github.com/anilibria/docs/blob/master/api_v2.md
- 
+
