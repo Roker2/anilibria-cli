@@ -44,7 +44,7 @@ def updates(desc):
     response = requests.get('https://api.anilibria.tv/v2/getUpdates')
     data = response.json()
     for item in data:
-        click.echo('* '+item['names']['ru'] + ' | ' + item['names']['en'])
+        click.echo('* ' + item['names']['ru'] + ' | ' + item['names']['en'])
         if desc:
             click.echo(item['description'])
             click.echo(separator_line)
