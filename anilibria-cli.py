@@ -67,6 +67,9 @@ def randomtitle(desc):
         click.echo(name['description'])
 
 
+cli.add_command(randomtitle)
+
+
 @click.command()
 def schedule(desc):
     days = {0: "Понедельник",
@@ -75,7 +78,7 @@ def schedule(desc):
             3: "Четверг",
             4: "Пятница",
             5: "Суббота",
-            6: "Воскресеьне"}
+            6: "Воскресенье"}
 
     response = requests.get('https://api.anilibria.tv/v2/getSchedule')
     name = response.json()
