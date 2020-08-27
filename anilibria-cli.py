@@ -75,7 +75,7 @@ def schedule(desc):
             3: "Четверг",
             4: "Пятница",
             5: "Суббота",
-            6: "Воскресеьне"}
+            6: "Воскресенье"}
 
     response = requests.get('https://api.anilibria.tv/v2/getSchedule')
     name = response.json()
