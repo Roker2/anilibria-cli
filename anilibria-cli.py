@@ -67,6 +67,9 @@ def randomtitle(desc):
         click.echo(name['description'])
 
 
+cli.add_command(randomtitle)
+
+
 @click.command()
 def schedule(desc):
     days = {0: "Понедельник",
